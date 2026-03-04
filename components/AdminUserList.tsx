@@ -164,6 +164,11 @@ export default function AdminUserList({
     }
     setIsCreating(true);
     const formData = new FormData(e.currentTarget);
+    const username = formData.get("username")?.toString();
+    if (username) {
+      formData.set("email", `${username}@gmail.com`);
+    }
+
     try {
       const result = await adminCreateUser(formData);
 
@@ -197,13 +202,12 @@ export default function AdminUserList({
             initial={{ opacity: 0, y: -20, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: -20, x: "-50%" }}
-            className={`fixed top-1/2 left-1/2 z-100 px-6 py-3 rounded-xl shadow-lg border flex items-center gap-3 min-w-[320px] max-w-[90vw] ${
-              notification.type === "success"
-                ? "bg-emerald-50/90 border-emerald-200 text-emerald-800"
-                : notification.type === "error"
-                  ? "bg-red-50/90 border-red-200 text-red-800"
-                  : "bg-amber-50/90 border-amber-200 text-amber-800"
-            }`}
+            className={`fixed top-1/2 left-1/2 z-100 px-6 py-3 rounded-xl shadow-lg border flex items-center gap-3 min-w-[320px] max-w-[90vw] ${notification.type === "success"
+              ? "bg-emerald-50/90 border-emerald-200 text-emerald-800"
+              : notification.type === "error"
+                ? "bg-red-50/90 border-red-200 text-red-800"
+                : "bg-amber-50/90 border-amber-200 text-amber-800"
+              }`}
           >
             {notification.type === "success" && (
               <svg
@@ -283,7 +287,7 @@ export default function AdminUserList({
             <thead className="uppercase tracking-wider border-b border-stone-200/60 bg-stone-50/50">
               <tr>
                 <th className="px-6 py-4 text-stone-500 font-semibold text-xs">
-                  Email
+                  Tài khoản
                 </th>
                 <th className="px-6 py-4 text-stone-500 font-semibold text-xs">
                   Vai trò
@@ -306,18 +310,17 @@ export default function AdminUserList({
                   className="hover:bg-stone-50/80 transition-colors"
                 >
                   <td className="px-6 py-4 font-medium text-stone-900">
-                    {user.email}
+                    {user.email.replace("@gmail.com", "")}
                   </td>
                   <td className="px-6 py-4">
                     {user.id === currentUserId ? (
                       <span
-                        className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${
-                          user.role === "admin"
-                            ? "bg-amber-100 text-amber-800 border border-amber-200"
-                            : user.role === "editor"
-                              ? "bg-sky-100 text-sky-800 border border-sky-200"
-                              : "bg-stone-100 text-stone-600 border border-stone-200"
-                        }`}
+                        className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${user.role === "admin"
+                          ? "bg-amber-100 text-amber-800 border border-amber-200"
+                          : user.role === "editor"
+                            ? "bg-sky-100 text-sky-800 border border-sky-200"
+                            : "bg-stone-100 text-stone-600 border border-stone-200"
+                          }`}
                       >
                         {user.role}
                       </span>
@@ -344,15 +347,13 @@ export default function AdminUserList({
                       onClick={() =>
                         handleStatusChange(user.id, !user.is_active)
                       }
-                      className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${
-                        user.is_active
-                          ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                          : "bg-stone-100 text-stone-800 border border-stone-200"
-                      } ${
-                        user.id !== currentUserId
+                      className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium transition-colors ${user.is_active
+                        ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                        : "bg-stone-100 text-stone-800 border border-stone-200"
+                        } ${user.id !== currentUserId
                           ? "hover:opacity-80 cursor-pointer"
                           : "opacity-50 cursor-not-allowed"
-                      } disabled:opacity-50`}
+                        } disabled:opacity-50`}
                       title={
                         user.id !== currentUserId
                           ? user.is_active
@@ -433,14 +434,14 @@ export default function AdminUserList({
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Email <span className="text-red-500">*</span>
+                    Tài khoản <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="username"
                     required
                     className="w-full px-3 py-2 sm:py-2.5 bg-white text-stone-900 placeholder-stone-400 border border-stone-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 transition-colors"
-                    placeholder="email@example.com"
+                    placeholder="Tên tài khoản"
                   />
                 </div>
 

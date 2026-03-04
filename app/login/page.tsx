@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +28,7 @@ export default function LoginPage() {
       const hostname = window.location.hostname;
       if (hostname === config.demoDomain) {
         setIsDemo(true);
-        setEmail("giaphaos@homielab.com");
+        setUsername("giaphaos");
         setPassword("giaphaos");
       }
     }
@@ -50,7 +50,7 @@ export default function LoginPage() {
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: `${username}@gmail.com`,
           password,
         });
 
@@ -69,7 +69,7 @@ export default function LoginPage() {
 
         // 1. Try to sign up
         const { data, error } = await supabase.auth.signUp({
-          email,
+          email: `${username}@gmail.com`,
           password,
         });
 
@@ -96,7 +96,7 @@ export default function LoginPage() {
             // Attempt to sign in immediately (catches auto-confirmed first admin)
             const { data: signInData, error: signInError } =
               await supabase.auth.signInWithPassword({
-                email,
+                email: `${username}@gmail.com`,
                 password,
               });
 
@@ -174,23 +174,23 @@ export default function LoginPage() {
             <div className="space-y-4">
               <div className="relative">
                 <label
-                  htmlFor="email-address"
+                  htmlFor="username"
                   className="block text-[13px] font-semibold text-stone-600 mb-1.5 ml-1"
                 >
-                  Email
+                  Tài khoản
                 </label>
                 <div className="relative flex items-center group">
-                  <Mail className="absolute left-3.5 size-5 text-stone-400 group-focus-within:text-amber-500 transition-colors" />
+                  <UserPlus className="absolute left-3.5 size-5 text-stone-400 group-focus-within:text-amber-500 transition-colors" />
                   <input
-                    id="email-address"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="username"
+                    name="username"
+                    type="text"
+                    autoComplete="username"
                     required
                     className="bg-white/50 text-stone-900 placeholder-stone-400 block w-full rounded-xl border border-stone-200/80 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] focus:border-amber-400 focus:ring-amber-400 focus:bg-white pl-11 pr-4 py-3.5 transition-all duration-200 outline-none"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Tên tài khoản"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
               </div>
@@ -351,14 +351,6 @@ export default function LoginPage() {
       >
         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
         Trang chủ
-      </Link>
-
-      <Link
-        href="/about"
-        className="absolute top-6 right-6 z-20 flex items-center gap-2 text-stone-500 hover:text-stone-900 font-semibold text-sm transition-all duration-300 group bg-white/60 px-5 py-2.5 rounded-full shadow-sm border border-stone-200 hover:border-stone-300 hover:shadow-md"
-      >
-        <Info className="size-4 group-hover:scale-110 transition-transform" />
-        Giới thiệu
       </Link>
 
       <Footer className="bg-transparent relative z-10 border-none mt-auto" />
