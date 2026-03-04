@@ -274,6 +274,7 @@ export default function RelationshipManager({
       setSelectedTargetId(null);
       setNewRelNote("");
       fetchRelationships();
+      router.refresh();
     } catch (err: unknown) {
       const e = err as Error;
       setError("Không thể thêm mối quan hệ: " + e.message);
@@ -354,12 +355,14 @@ export default function RelationshipManager({
         ]);
         setSelectedSpouseId("");
         fetchRelationships();
+        router.refresh();
       } else {
         setError(
           `Đã xảy ra lỗi. Chỉ lưu thành công ${successCount}/${validChildren.length} người.`,
         );
         setTimeout(() => setError(null), 5000);
         fetchRelationships();
+        router.refresh();
       }
     } catch (err: unknown) {
       const e = err as Error;
@@ -429,6 +432,7 @@ export default function RelationshipManager({
       setNewSpouseBirthYear("");
       setNewSpouseNote("");
       fetchRelationships();
+      router.refresh();
     } catch (err: unknown) {
       const e = err as Error;
       setError("Không thể thêm vợ/chồng: " + e.message);
@@ -447,6 +451,7 @@ export default function RelationshipManager({
         .eq("id", relId);
       if (error) throw error;
       fetchRelationships();
+      router.refresh();
     } catch (err: unknown) {
       const e = err as Error;
       setError("Không thể xóa: " + e.message);
@@ -709,57 +714,56 @@ export default function RelationshipManager({
                 (searchTerm.length === 0 &&
                   !selectedTargetId &&
                   recentMembers.length > 0)) && (
-                <div className="mt-2 bg-white border border-stone-200 rounded-md shadow-lg max-h-[250px] overflow-y-auto">
-                  <div className="px-3 py-1.5 bg-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wide border-b border-stone-200 sticky top-0 z-10">
-                    {searchResults.length > 0
-                      ? "Kết quả tìm kiếm"
-                      : "Thành viên vừa thêm gần đây"}
+                  <div className="mt-2 bg-white border border-stone-200 rounded-md shadow-lg max-h-[250px] overflow-y-auto">
+                    <div className="px-3 py-1.5 bg-stone-100 text-[10px] font-bold text-stone-500 uppercase tracking-wide border-b border-stone-200 sticky top-0 z-10">
+                      {searchResults.length > 0
+                        ? "Kết quả tìm kiếm"
+                        : "Thành viên vừa thêm gần đây"}
+                    </div>
+                    {(searchResults.length > 0
+                      ? searchResults
+                      : recentMembers
+                    ).map((p) => (
+                      <button
+                        key={p.id}
+                        onClick={() => {
+                          setSelectedTargetId(p.id);
+                          setSearchTerm(p.full_name);
+                          setSearchResults([]);
+                        }}
+                        className="px-3 py-2 hover:bg-amber-50 text-sm flex items-center justify-between border-b border-stone-100 last:border-0"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`flex items-center justify-center text-[8px] font-bold size-3 rounded-full text-white shrink-0
+                               ${p.gender === "male"
+                                ? "bg-sky-500"
+                                : p.gender === "female"
+                                  ? "bg-rose-500"
+                                  : "bg-stone-400"
+                              }`}
+                          >
+                            {p.gender === "male"
+                              ? "♂"
+                              : p.gender === "female"
+                                ? "♀"
+                                : "?"}
+                          </span>
+                          <span className="font-medium text-stone-800">
+                            {p.full_name}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-stone-400">
+                          {formatDisplayDate(
+                            p.birth_year,
+                            p.birth_month,
+                            p.birth_day,
+                          )}
+                        </span>
+                      </button>
+                    ))}
                   </div>
-                  {(searchResults.length > 0
-                    ? searchResults
-                    : recentMembers
-                  ).map((p) => (
-                    <button
-                      key={p.id}
-                      onClick={() => {
-                        setSelectedTargetId(p.id);
-                        setSearchTerm(p.full_name);
-                        setSearchResults([]);
-                      }}
-                      className="px-3 py-2 hover:bg-amber-50 text-sm flex items-center justify-between border-b border-stone-100 last:border-0"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`flex items-center justify-center text-[8px] font-bold size-3 rounded-full text-white shrink-0
-                               ${
-                                 p.gender === "male"
-                                   ? "bg-sky-500"
-                                   : p.gender === "female"
-                                     ? "bg-rose-500"
-                                     : "bg-stone-400"
-                               }`}
-                        >
-                          {p.gender === "male"
-                            ? "♂"
-                            : p.gender === "female"
-                              ? "♀"
-                              : "?"}
-                        </span>
-                        <span className="font-medium text-stone-800">
-                          {p.full_name}
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-stone-400">
-                        {formatDisplayDate(
-                          p.birth_year,
-                          p.birth_month,
-                          p.birth_day,
-                        )}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
+                )}
               {selectedTargetId && (
                 <p className="text-xs text-green-600 mt-1">
                   Đã chọn: {searchTerm}
