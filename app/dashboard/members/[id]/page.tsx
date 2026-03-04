@@ -1,4 +1,3 @@
-import DeleteMemberButton from "@/components/DeleteMemberButton";
 import MemberDetailContent from "@/components/MemberDetailContent";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
@@ -78,7 +77,6 @@ export default async function MemberDetailPage({ params }: PageProps) {
             >
               Chỉnh sửa
             </Link>
-            <DeleteMemberButton memberId={id} />
           </div>
         )}
       </div>

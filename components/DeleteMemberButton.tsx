@@ -5,15 +5,20 @@ import { AlertCircle, X } from "lucide-react";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 interface DeleteMemberButtonProps {
   memberId: string;
+  onDeleted?: () => void;
 }
 
 export default function DeleteMemberButton({
   memberId,
+  onDeleted,
 }: DeleteMemberButtonProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleDelete = async () => {
     if (
@@ -33,7 +38,11 @@ export default function DeleteMemberButton({
         setIsDeleting(false);
         return;
       }
-      // Note: the server action will redirect on success
+      // Note: the server action will redirect on success if not stopped
+      if (onDeleted) {
+        onDeleted();
+        router.refresh(); // Refresh dashboard context
+      }
     } catch (err) {
       if (isRedirectError(err)) {
         throw err;

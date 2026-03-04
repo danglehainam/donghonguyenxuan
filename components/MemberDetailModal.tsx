@@ -2,6 +2,7 @@
 
 import MemberDetailContent from "@/components/MemberDetailContent";
 import MemberForm from "@/components/MemberForm";
+import DeleteMemberButton from "@/components/DeleteMemberButton";
 import { Person } from "@/types";
 import { createClient } from "@/utils/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
@@ -195,6 +196,9 @@ export default function MemberDetailModal() {
                       <Edit2 className="size-4" />
                       <span className="hidden sm:inline">Chỉnh sửa</span>
                     </button>
+                    {isAdmin && (
+                      <DeleteMemberButton memberId={person.id} onDeleted={closeModal} />
+                    )}
                   </>
                 )
               )}

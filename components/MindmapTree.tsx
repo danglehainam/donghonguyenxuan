@@ -170,13 +170,12 @@ const MindmapNode = memo(
                       <div className="relative shrink-0">
                         <div
                           className={`size-10 rounded-full overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-md ring-2 ring-white transition-transform duration-300 group-hover/card:scale-105
-                    ${
-                      data.person.gender === "male"
-                        ? "bg-linear-to-br from-sky-400 to-sky-700"
-                        : data.person.gender === "female"
-                          ? "bg-linear-to-br from-rose-400 to-rose-700"
-                          : "bg-linear-to-br from-stone-400 to-stone-600"
-                    }`}
+                    ${data.person.gender === "male"
+                              ? "bg-linear-to-br from-sky-400 to-sky-700"
+                              : data.person.gender === "female"
+                                ? "bg-linear-to-br from-rose-400 to-rose-700"
+                                : "bg-linear-to-br from-stone-400 to-stone-600"
+                            }`}
                         >
                           {data.person.avatar_url ? (
                             <Image
@@ -225,13 +224,12 @@ const MindmapNode = memo(
                         <div className="flex flex-wrap items-center gap-1 mt-1.5 shrink-0">
                           {data.person.is_in_law && (
                             <span
-                              className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest shadow-xs border ${
-                                data.person.gender === "male"
+                              className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest shadow-xs border ${data.person.gender === "male"
                                   ? "bg-sky-50 text-sky-700 border-sky-200/60"
                                   : data.person.gender === "female"
                                     ? "bg-rose-50 text-rose-700 border-rose-200/60"
                                     : "bg-stone-50 text-stone-700 border-stone-200/60"
-                              }`}
+                                }`}
                             >
                               {data.person.gender === "male"
                                 ? "Rể"
@@ -268,13 +266,12 @@ const MindmapNode = memo(
                             {ctx.showAvatar && (
                               <div
                                 className={`size-8 rounded-full overflow-hidden flex items-center justify-center text-white text-[10px] font-bold shadow-sm ring-2 ring-white transition-transform duration-300 group-hover/spouse:scale-105
-                        ${
-                          spouseData.person.gender === "male"
-                            ? "bg-linear-to-br from-sky-400 to-sky-700"
-                            : spouseData.person.gender === "female"
-                              ? "bg-linear-to-br from-rose-400 to-rose-700"
-                              : "bg-linear-to-br from-stone-400 to-stone-600"
-                        }`}
+                        ${spouseData.person.gender === "male"
+                                    ? "bg-linear-to-br from-sky-400 to-sky-700"
+                                    : spouseData.person.gender === "female"
+                                      ? "bg-linear-to-br from-rose-400 to-rose-700"
+                                      : "bg-linear-to-br from-stone-400 to-stone-600"
+                                  }`}
                               >
                                 {spouseData.person.avatar_url ? (
                                   <Image
@@ -454,11 +451,10 @@ export default function MindmapTree({
             <div className="relative">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 h-10 rounded-full font-semibold text-sm shadow-sm border transition-all duration-300 ${
-                  showFilters
+                className={`flex items-center gap-2 px-4 h-10 rounded-full font-semibold text-sm shadow-sm border transition-all duration-300 ${showFilters
                     ? "bg-amber-100/90 text-amber-800 border-amber-200"
                     : "bg-white/80 text-stone-600 border-stone-200/60 hover:bg-white hover:text-stone-900 hover:shadow-md backdrop-blur-md"
-                }`}
+                  }`}
               >
                 <Filter className="size-4" />
                 <span className="hidden sm:inline">Lọc hiển thị</span>
