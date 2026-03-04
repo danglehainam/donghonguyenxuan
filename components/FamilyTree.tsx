@@ -277,8 +277,8 @@ export default function FamilyTree({
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-4 h-10 rounded-full font-semibold text-sm shadow-sm border transition-all duration-300 ${showFilters
-                    ? "bg-amber-100/90 text-amber-800 border-amber-200"
-                    : "bg-white/80 text-stone-600 border-stone-200/60 hover:bg-white hover:text-stone-900 hover:shadow-md backdrop-blur-md"
+                  ? "bg-amber-100/90 text-amber-800 border-amber-200"
+                  : "bg-white/80 text-stone-600 border-stone-200/60 hover:bg-white hover:text-stone-900 hover:shadow-md backdrop-blur-md"
                   }`}
               >
                 <Filter className="size-4" />
@@ -412,6 +412,12 @@ export default function FamilyTree({
         }
         .css-tree ul:first-child > li::before {
           display: none;
+        }
+
+        /* Prevent multiple root trees from drawing connecting lines between each other */
+        .css-tree > ul > li::before,
+        .css-tree > ul > li::after {
+          display: none !important;
         }
 
         /* Remove left connector from first child and right connector from last child */
