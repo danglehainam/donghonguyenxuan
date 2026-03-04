@@ -7,11 +7,6 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 export async function updateSession(request: NextRequest) {
   // If env vars are missing, we cannot create a supabase client
   if (!supabaseUrl || !supabaseKey) {
-    if (request.nextUrl.pathname !== "/missing-db-config") {
-      const url = request.nextUrl.clone();
-      url.pathname = "/missing-db-config";
-      return NextResponse.redirect(url);
-    }
     return NextResponse.next({ request });
   }
 

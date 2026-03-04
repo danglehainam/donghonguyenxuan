@@ -47,14 +47,6 @@ export default function LandingHero({ siteName }: LandingHeroProps) {
           className="space-y-6 sm:space-y-8 flex flex-col items-center"
           variants={fadeIn}
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-amber-800 bg-white/60 rounded-full shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] border border-amber-200/50 relative overflow-hidden group"
-          >
-            <Sparkles className="size-4 text-amber-500" />
-            Nền tảng gia phả hiện đại & bảo mật
-            <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-          </motion.div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-serif font-bold text-stone-900 tracking-tight leading-[1.1] max-w-4xl">
             <span className="block">{siteName}</span>
