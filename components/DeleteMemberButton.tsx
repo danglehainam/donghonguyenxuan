@@ -2,7 +2,6 @@
 
 import { deleteMemberProfile } from "@/app/actions/member";
 import { AlertCircle, X } from "lucide-react";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -38,15 +37,14 @@ export default function DeleteMemberButton({
         setIsDeleting(false);
         return;
       }
-      // Note: the server action will redirect on success if not stopped
+      // Success
+      setIsDeleting(false);
       if (onDeleted) {
         onDeleted();
-        router.refresh(); // Refresh dashboard context
       }
+      router.refresh(); // Refresh dashboard context
+      router.push("/dashboard"); // Redirect to dashboard if not already there
     } catch (err) {
-      if (isRedirectError(err)) {
-        throw err;
-      }
       console.error("Delete failed:", err);
       setError(
         err instanceof Error ? err.message : "Đã xảy ra lỗi khi xoá hồ sơ.",
